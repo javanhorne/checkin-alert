@@ -13,4 +13,9 @@
 
 class Flight < ApplicationRecord
   belongs_to :user, :foreign_key => "owner_id"
+
+ def owner
+    all_matches = User.where({ :id => self.owner_id })
+    return all_matches.first
+  end
 end
