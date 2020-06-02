@@ -1,0 +1,135 @@
+<div class="row mb-3">
+  <div class="col-md-12">
+    <h1>
+      List of all flights
+    </h1>
+  </div>
+</div>
+
+<hr>
+
+<div class="row mb-3">
+  <div class="col-md-8 offset-md-2">
+    <h2>
+      Add a new flight
+    </h2>
+
+    <form action="/insert_flight" method="post">
+      <div class="form-group">
+        <label for="owner_id_box" hidden>
+        </label>
+
+        <input  type="text" id="owner_id_box" name="query_owner_id" class="form-control" value="<%=@current_user.id%>" hidden>
+      </div>
+
+      <div class="form-group">
+        <label for="description_box">
+          Description
+        </label>
+
+        <input type="text" id="description_box" name="query_description" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label for="time_box">
+          Time
+        </label>
+
+        <input type="datetime-local" id="time_box" name="query_time" class="form-control">
+      </div>
+
+      <div class="custom-control custom-checkbox mb-3">
+        <input type="checkbox" class="custom-control-input" id="reminder_box" name="query_reminder" value="1" hidden>
+
+        <label class="custom-control-label" for="reminder_box" hidden>Reminder</label>
+      </div>
+
+      <button class="btn btn-block btn-outline-secondary">
+        Create flight
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
+
+
+<div class="card">
+      <div class="card-header h6 py-3 text-uppercase">
+        Upcoming flights
+      </div>
+<% @current_user.flights.each do |flight| %>
+<% if flight.time > DateTime.now %>
+
+      <ul class="list-group list-group-flush">
+          <li class="list-group-item d-flex align-items-center justify-content-between">
+            <div>
+              Departs for <%=flight.description %> at  <%=flight.time %>
+            </div>
+
+            <div>
+                <% if flight.reminder == false %>
+                  <span class="badge badge-danger">
+                    <i class="fas fa-fw fa-stopwatch"></i>
+
+                    Alert not yet sent
+                  </span>
+                <%end%>
+                <% if flight.reminder == true %>
+                  <span class="badge badge-success">
+                    <i class="fas fa-fw fa-check-square"></i>
+
+                    Alert has been sent
+                  </span>
+                <%end%>
+              <a href="/delete_flight/<%=flight.id%>">
+                <i class="far fa-fw fa-trash-alt"></i>
+              </a>
+            </div>
+          </li>
+      </ul>
+ 
+  <%end%> 
+  <%end%>
+     </div>
+<br>
+
+  <div class="card">
+      <div class="card-header h6 py-3 text-uppercase">
+        Past flights
+      </div>
+<% @current_user.flights.each do |flight| %>
+<% if flight.time <= DateTime.now %>
+
+      <ul class="list-group list-group-flush">
+          <li class="list-group-item d-flex align-items-center justify-content-between">
+            <div>
+              Departed for <%=flight.description %> at  <%=flight.time %>
+            </div>
+
+            <div>
+                <% if flight.reminder == false %>
+                  <span class="badge badge-danger">
+                    <i class="fas fa-fw fa-stopwatch"></i>
+
+                    Alert not yet sent
+                  </span>
+                <%end%>
+                <% if flight.reminder == true %>
+                  <span class="badge badge-success">
+                    <i class="fas fa-fw fa-check-square"></i>
+
+                    Alert has been sent
+                  </span>
+                <%end%>
+              <a href="/delete_flight/<%=flight.id%>">
+                <i class="far fa-fw fa-trash-alt"></i>
+              </a>
+            </div>
+          </li>
+      </ul>
+    
+  <%end%> 
+  <%end%>
+  </div>
+  

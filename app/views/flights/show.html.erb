@@ -1,0 +1,116 @@
+<div class="row mb-3">
+  <div class="col-md-8 offset-md-2">
+    <h1>
+      Flight #<%= @flight.id %> details
+    </h1>
+
+    <div class="row mb-3">
+      <div class="col">
+        <a href="/flights" class="btn btn-block btn-outline-secondary">
+          Go back
+        </a>
+      </div>
+
+      <div class="col">
+        <a href="/delete_flight/<%= @flight.id %>" class="btn btn-block btn-outline-secondary">
+          Delete flight
+        </a>
+      </div>
+    </div>
+
+    <dl>
+      <dt>
+        Owner
+      </dt>
+      <dd>
+        <%= @flight.owner_id %>
+      </dd>
+
+      <dt>
+        Description
+      </dt>
+      <dd>
+        <%= @flight.description %>
+      </dd>
+
+      <dt>
+        Time
+      </dt>
+      <dd>
+        <%= @flight.time %>
+      </dd>
+
+      <dt>
+        Reminder
+      </dt>
+      <dd>
+        <%= @flight.reminder %>
+      </dd>
+
+      <dt>
+        Created at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@flight.created_at) %> ago
+      </dd>
+
+      <dt>
+        Updated at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@flight.updated_at) %> ago
+      </dd>
+    </dl>
+  </div>
+</div>
+
+<hr>
+
+
+<div class="row mb-3">
+  <div class="col-md-8 offset-md-2">
+    <h2>
+      Edit flight
+    </h2>
+
+    <form action="/modify_flight/<%= @flight.id %>"  method="post" >
+      <div class="form-group">
+        <label for="owner_id_box">
+          Owner
+        </label>
+
+        <input type="text" id="owner_id_box" name="query_owner_id" class="form-control" value="<%= @flight.owner_id %>">
+      </div>
+
+      <div class="form-group">
+        <label for="description_box">
+          Description
+        </label>
+
+        <input type="text" id="description_box" name="query_description" class="form-control" value="<%= @flight.description %>">
+      </div>
+
+      <div class="form-group">
+        <label for="time_box">
+          Time
+        </label>
+
+        <input type="datetime-local" id="time_box" name="query_time"
+          class="form-control" value="<%= @flight.time %>">
+      </div>
+
+      <div class="custom-control custom-checkbox mb-3">
+        <input type="checkbox" class="custom-control-input" id="reminder_box" name="query_reminder" value="1" <%= "checked" if @flight.reminder %>>
+
+        <label class="custom-control-label"
+          for="reminder_box">Reminder</label>
+      </div>
+
+      <button class="btn btn-block btn-outline-secondary">
+        Update flight
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
